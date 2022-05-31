@@ -1,0 +1,387 @@
+<document xmlns="http://cnx.rice.edu/cnxml" xmlns:md="http://cnx.rice.edu/mdml">
+  <title>Kiểu cấu trúc</title>
+  <metadata>
+  <md:content-id>m29845</md:content-id><md:title>Kiểu cấu trúc</md:title>
+  <md:abstract>Học xong chương này, sinh viên sẽ nắm được các vấn đề sau:
++ Khái niệm về kiểu cấu trúc. 
++ Cách sử dụng kiểu cấu trúc.
++ Con trỏ cấu trúc.</md:abstract>
+  <md:uuid>d3ae19c3-7ad2-4e06-9e2e-9098d13281ea</md:uuid>
+</metadata>
+
+<content>
+    <section id="id-92119073318">
+      <title>KIỂU CẤU TRÚC TRONG C</title>
+      <section id="id-779294683569">
+        <title>Khái niệm</title>
+        <para id="id7863474">Kiểu cấu trúc (Structure) là kiểu dữ liệu bao gồm nhiều thành phần có kiểu khác nhau, mỗi thành phần được gọi là một trường (field)</para>
+        <para id="id7863485">Sự khác biệt giữa kiểu cấu trúc và kiểu mảng là: các phần tử của mảng là cùng kiểu còn các phần tử của kiểu cấu trúc có thể có kiểu khác nhau.</para>
+        <para id="id7863500">Hình ảnh của kiểu cấu trúc được minh họa:</para>
+        <table id="id7863507" summary="">
+          <tgroup cols="7">
+            <colspec colnum="1" colname="c1"/>
+            <colspec colnum="2" colname="c2"/>
+            <colspec colnum="3" colname="c3"/>
+            <colspec colnum="4" colname="c4"/>
+            <colspec colnum="5" colname="c5"/>
+            <colspec colnum="6" colname="c6"/>
+            <colspec colnum="7" colname="c7"/>
+            <tbody>
+              <row>
+                <entry>1</entry>
+                <entry>2</entry>
+                <entry>3</entry>
+                <entry>4</entry>
+                <entry>5</entry>
+                <entry>6</entry>
+                <entry>Trường7</entry>
+              </row>
+              <row>
+                <entry/>
+                <entry/>
+                <entry/>
+                <entry/>
+                <entry/>
+                <entry/>
+                <entry/>
+              </row>
+            </tbody>
+          </tgroup>
+        </table>
+        <para id="id7502211">Đây là cấu trúc có 7 trường</para>
+        <para id="id7502223">Còn kiểu mảng có dạng:</para>
+        <table id="id7156617" summary="">
+          <tgroup cols="15">
+            <colspec colnum="1" colname="c1"/>
+            <colspec colnum="2" colname="c2"/>
+            <colspec colnum="3" colname="c3"/>
+            <colspec colnum="4" colname="c4"/>
+            <colspec colnum="5" colname="c5"/>
+            <colspec colnum="6" colname="c6"/>
+            <colspec colnum="7" colname="c7"/>
+            <colspec colnum="8" colname="c8"/>
+            <colspec colnum="9" colname="c9"/>
+            <colspec colnum="10" colname="c10"/>
+            <colspec colnum="11" colname="c11"/>
+            <colspec colnum="12" colname="c12"/>
+            <colspec colnum="13" colname="c13"/>
+            <colspec colnum="14" colname="c14"/>
+            <colspec colnum="15" colname="c15"/>
+            <tbody>
+              <row>
+                <entry>0</entry>
+                <entry>1</entry>
+                <entry>2</entry>
+                <entry>3</entry>
+                <entry>4</entry>
+                <entry>5</entry>
+                <entry>6</entry>
+                <entry>7</entry>
+                <entry>8</entry>
+                <entry>9</entry>
+                <entry>10</entry>
+                <entry>11</entry>
+                <entry>12</entry>
+                <entry>13</entry>
+                <entry>Phần tử14</entry>
+              </row>
+              <row>
+                <entry/>
+                <entry/>
+                <entry/>
+                <entry/>
+                <entry/>
+                <entry/>
+                <entry/>
+                <entry/>
+                <entry/>
+                <entry/>
+                <entry/>
+                <entry/>
+                <entry/>
+                <entry/>
+                <entry/>
+              </row>
+            </tbody>
+          </tgroup>
+        </table>
+        <para id="id7168894">Đây là mảng có 15 phần tử</para>
+      </section>
+      <section id="id-342904943536">
+        <title>Định nghĩa kiểu cấu trúc</title>
+        <para id="id7168914">Cách 1: </para>
+        <para id="id7168930">struct &lt;Tên cấu trúc&gt;</para>
+        <para id="id7282109">{</para>
+        <para id="id7282122">&lt;Kiểu&gt; &lt;Trường 1&gt;;</para>
+        <para id="id7282133">&lt;Kiểu&gt; &lt;Trường 2&gt;;</para>
+        <para id="id7282144">……..</para>
+        <para id="id7649403">&lt;Kiểu&gt; &lt;Trường n&gt;;</para>
+        <para id="id7649414">};</para>
+        <para id="id7649430">Cách 2: Sử dụng từ khóa typedef để định nghĩa kiểu:</para>
+        <para id="id7159439">typedef struct </para>
+        <para id="id7159446">{</para>
+        <para id="id7159458">&lt;Kiểu&gt; &lt;Trường 1&gt;;</para>
+        <para id="id7159472">&lt;Kiểu&gt; &lt;Trường 2&gt;;</para>
+        <para id="id6993896">……..</para>
+        <para id="id6993904">&lt;Kiểu&gt; &lt;Trường n&gt;;</para>
+        <para id="id6993914">} &lt;Tên cấu trúc&gt;;</para>
+        <para id="id7191931"/>
+        <para id="id7191934">Trong đó:</para>
+        <para id="id7191950">- &lt;Tên cấu trúc&gt;: là một tên được đặt theo quy tắc đặt tên của danh biểu; tên này mang ý nghĩa sẽ là tên kiểu cấu trúc.</para>
+        <para id="id7191965">- &lt;Kiểu&gt; &lt;Trường i&gt; (i=1..n): mỗi trường trong cấu trúc có dữ liệu thuộc kiểu gì (tên của trường phải là một tên được đặt theo quy tắc đặt tên của danh biểu).</para>
+        <para id="id7962478">Ví dụ 1: Để quản lý ngày, tháng, năm của một ngày trong năm ta có thể khai báo kiểu cấu trúc gồm 3 thông tin: ngày, tháng, năm.</para>
+      </section>
+    </section>
+    <section id="id7962498">
+      <para id="id7962503">struct NgayThang</para>
+      <para id="id7962508">{</para>
+      <para id="id7765845">unsigned char Ngay;</para>
+      <para id="id7765853">unsigned char Thang;</para>
+      <para id="id7765859">unsigned int Nam;</para>
+      <para id="id7765864">};</para>
+      <para id="id7765876">typedef struct</para>
+      <para id="id6989752">{</para>
+      <para id="id6989764">unsigned char Ngay;</para>
+      <para id="id6989770">unsigned char Thang;</para>
+      <para id="id6989777">unsigned int Nam;</para>
+      <para id="id6989783">} NgayThang;</para>
+    </section>
+    <section id="id6149334">
+      <para id="id6149340"/>
+      <para id="id6149344">Ví dụ 2: Mỗi sinh viên cần được quản lý bởi các thông tin: mã số sinh viên, họ tên, ngày tháng năm sinh, giới tính, địa chỉ thường trú. Lúc này ta có thể khai báo một struct gồm các thông tin trên.</para>
+    </section>
+    <section id="id7630628">
+      <para id="id7630634">struct SinhVien</para>
+      <para id="id7630638">{</para>
+      <para id="id7630642">char MSSV[10];</para>
+      <para id="id7630648">char HoTen[40];</para>
+      <para id="id7630654">struct NgayThang NgaySinh;</para>
+      <para id="id7630659">int Phai;</para>
+      <para id="id6149364">char DiaChi[40];</para>
+      <para id="id7456658">};</para>
+      <para id="id7456669">typedef struct</para>
+      <para id="id7456681">{</para>
+      <para id="id7456685">char MSSV[10];</para>
+      <para id="id7456692">char HoTen[40];</para>
+      <para id="id7727514">NgayThang NgaySinh;</para>
+      <para id="id7727520">int Phai;</para>
+      <para id="id7727527">char DiaChi[40];</para>
+      <para id="id7727535">} SinhVien;</para>
+    </section>
+    <section id="id7815386">
+      <section id="id-228436745494">
+        <title>Khai báo biến cấu trúc</title>
+        <para id="id7815399">Việc khai báo biến cấu trúc cũng tương tự như khai báo biến thuộc kiểu dữ liệu chuẩn.</para>
+        <para id="id7815411">Cú pháp:</para>
+        <para id="id7815427">- Đối với cấu trúc được định nghĩa theo cách 1:</para>
+        <para id="id7517845">struct &lt;Tên cấu trúc&gt; &lt;Biến 1&gt; [, &lt;Biến 2&gt;…];</para>
+        <para id="id7517876">- Đối với các cấu trúc được định nghĩa theo cách 2:</para>
+        <para id="id7963009">&lt;Tên cấu trúc&gt; &lt;Biến 1&gt; [, &lt;Biến 2&gt;…];</para>
+        <para id="id7963020">Ví dụ: Khai báo biến NgaySinh có kiểu cấu trúc NgayThang; biến SV có kiểu cấu trúc SinhVien.</para>
+      </section>
+    </section>
+    <section id="id7963043">
+      <para id="id7545521">struct NgayThang NgaySinh;</para>
+      <para id="id7545528">struct SinhVien SV;</para>
+      <para id="id7545534">NgayThang NgaySinh;</para>
+      <para id="id7545538">SinhVien SV;</para>
+    </section>
+    <section id="id7545545">
+      <para id="id7545550"/>
+      <section id="id-824122075793">
+        <title>CÁC THAO TÁC TRÊN BIẾN KIỂU CẤU TRÚC</title>
+        <section id="id-106834243191">
+          <title>Truy xuất đến từng trường của biến cấu trúc</title>
+          <para id="id6151734">Cú pháp:&lt;Biến cấu trúc&gt;.&lt;Tên trường&gt;</para>
+          <para id="id6151753">Khi sử dụng cách truy xuất theo kiểu này, các thao tác trên &lt;Biến cấu trúc&gt;.&lt;Tên trường&gt; giống như các thao tác trên các biến của kiểu dữ liệu của &lt;Tên trường&gt;.</para>
+          <para id="id6151764">Ví dụ : Viết chương trình cho phép đọc dữ liệu từ bàn phím cho biến mẩu tin SinhVien và in biến mẩu tin đó lên màn hình:</para>
+          <para id="id7682583">#include&lt;conio.h&gt;</para>
+          <para id="id7682588">#include&lt;stdio.h&gt;</para>
+          <para id="id7682592">#include&lt;string.h&gt;</para>
+          <para id="id7499996">typedef struct</para>
+          <para id="id7500000">{</para>
+          <para id="id7500005">unsigned char Ngay;</para>
+          <para id="id7500012">unsigned char Thang;</para>
+          <para id="id7500019">unsigned int Nam;</para>
+          <para id="id7500027">} NgayThang;</para>
+          <para id="id7500032">typedef struct</para>
+          <para id="id7500036">{</para>
+          <para id="id7159066">char MSSV[10];</para>
+          <para id="id7159073">char HoTen[40];</para>
+          <para id="id7159081">NgayThang NgaySinh;</para>
+          <para id="id7159088">int Phai;</para>
+          <para id="id7159096">char DiaChi[40];</para>
+          <para id="id7159103">} SinhVien;</para>
+          <para id="id6964620">/* Hàm in lên màn hình 1 mẩu tin SinhVien*/</para>
+          <para id="id6964630">void InSV(SinhVien s)</para>
+          <para id="id6964635">{</para>
+          <para id="id6964639">printf("MSSV: | Ho va ten | Ngay Sinh | Dia chi\n");</para>
+          <para id="id6361668">printf("%s | %s | %d-%d-%d | %s\n",s.MSSV,s.HoTen,</para>
+          <para id="id6361684">s.NgaySinh.Ngay,s.NgaySinh.Thang,s.NgaySinh.Nam,s.DiaChi);</para>
+          <para id="id6361696">}</para>
+          <para id="id6361700">int main()</para>
+          <para id="id6361704">{</para>
+          <para id="id7827577">SinhVien SV, s;</para>
+          <para id="id7827586">printf("Nhap MSSV: ");gets(SV.MSSV);</para>
+          <para id="id7827594">printf("Nhap Ho va ten: ");gets(SV.HoTen);</para>
+          <para id="id7827601">printf("Sinh ngay: ");scanf("%d",&amp;SV.NgaySinh.Ngay);</para>
+          <para id="id7827609">printf("Thang: ");scanf("%d",&amp;SV.NgaySinh.Thang);</para>
+          <para id="id6436378">printf("Nam: ");scanf("%d",&amp;SV.NgaySinh.Nam);</para>
+          <para id="id6436386">printf("Gioi tinh (0: Nu), (1: Nam): ");scanf("%d",&amp;SV.Phai);</para>
+          <para id="id6436395">flushall();</para>
+          <para id="id6436403">printf("Dia chi: ");gets(SV.DiaChi);</para>
+          <para id="id6436410">InSV(SV);</para>
+          <para id="id7909450">s=SV;/* Gán trị cho mẩu tin s*/</para>
+          <para id="id7909464">InSV(s);</para>
+          <para id="id7909474">getch();</para>
+          <para id="id7909482">return 0;</para>
+          <para id="id7909489">}</para>
+          <figure id="id7882316">
+            <media id="id1169040564067" alt=""><image src="../../media/graphics1-115a.png" mime-type="image/png" height="163" width="608"/></media>
+          </figure>
+          <para id="id7882340">Lưu ý: </para>
+          <para id="id7882351">- Các biến cấu trúc có thể gán cho nhau. Thực chất đây là thao tác trên toàn bộ cấu trúc không phải trên một trường riêng rẽ nào. Chương trình trên dòng s=SV là một ví dụ.</para>
+          <para id="id7735166">- Với các biến kiểu cấu trúc ta không thể thực hiện được các thao tác sau đây:</para>
+          <list id="id7735177" list-type="bulleted">
+            <item>Sử dụng các hàm xuất nhập trên biến cấu trúc. </item>
+            <item>Các phép toán quan hệ, các phép toán số học và logic.</item>
+          </list>
+          <para id="id7494555">Ví dụ: Nhập vào hai số phức và tính tổng của chúng. Ta biết rằng số phức là một cặp (a,b) trong đó a, b là các số thực, a gọi là phần thực, b là phần ảo. (Đôi khi người ta cũng viết số phức dưới dạng a + ib trong đó i là một đơn vị ảo có tính chất i2=-1). Gọi số phức c1=(a1, b1) và c2=(a2,b2) khi đó tổng của hai số phức c1 và c2 là một số phức c3 mà c3=(a1+a2, b1+b2). Với hiểu biết như vậy ta có thể xem mỗi số phức là một cấu trúc có hai trường, một trường biểu diễn cho phần thực, một trường biểu diễn cho phần ảo. Việc tính tổng của hai số phức được tính bằng cách lấy phần thực cộng với phần thực và phần ảo cộng với phần ảo.</para>
+          <para id="id7494585">#include&lt;conio.h&gt;</para>
+          <para id="id7494589">#include&lt;stdio.h&gt;</para>
+          <para id="id6150505">#include&lt;string.h&gt;</para>
+          <para id="id6150509">typedef struct</para>
+          <para id="id6150514">{</para>
+          <para id="id6150518">float Thuc;</para>
+          <para id="id6150523">float Ao;</para>
+          <para id="id6150528">} SoPhuc;</para>
+          <para id="id6150533">/* Hàm in số phức lên màn hình*/</para>
+          <para id="id6989586">void InSoPhuc(SoPhuc p)</para>
+          <para id="id6989590">{</para>
+          <para id="id6989594">printf("%.2f + i%.2f\n",p.Thuc,p.Ao);</para>
+          <para id="id6989599">}</para>
+          <para id="id6989603">int main()</para>
+          <para id="id6989608">{</para>
+          <para id="id6989612">SoPhuc p1,p2,p;</para>
+          <para id="id6989617">clrscr();</para>
+          <para id="id7880302">printf("Nhap so phuc thu nhat:\n");</para>
+          <para id="id7880308">printf("Phan thuc: ");scanf("%f",&amp;p1.Thuc);</para>
+          <para id="id7880314">printf("Phan ao: ");scanf("%f",&amp;p1.Ao);</para>
+          <para id="id7880321">printf("Nhap so phuc thu hai:\n");</para>
+          <para id="id7880326">printf("Phan thuc: ");scanf("%f",&amp;p2.Thuc);</para>
+          <para id="id7880332">printf("Phan ao: ");scanf("%f",&amp;p2.Ao);</para>
+          <para id="id7880339">printf("So phuc thu nhat: ");</para>
+          <para id="id7201855">InSoPhuc(p1);</para>
+          <para id="id7201861">printf("So phuc thu hai: ");</para>
+          <para id="id7201866">InSoPhuc(p2);</para>
+          <para id="id7201872">p.Thuc = p1.Thuc+p2.Thuc;</para>
+          <para id="id7201877">p.Ao = p1.Ao + p2.Ao;</para>
+          <para id="id7201882">printf("Tong 2 so phuc: ");</para>
+          <para id="id7201887">InSoPhuc(p);</para>
+          <para id="id7201893">getch();</para>
+          <para id="id7882269">return 0;</para>
+          <para id="id7882275">}</para>
+          <para id="id7882279">Kết quả thực hiện chương trình:</para>
+          <figure id="id7882288">
+            <media id="id1169034741889" alt=""><image src="../../media/graphics2-3c05.png" mime-type="image/png" height="162" width="308"/></media>
+          </figure>
+        </section>
+        <section id="id-762656979412">
+          <title>Khởi tạo cấu trúc</title>
+          <para id="id7909580">Việc khởi tạo cấu trúc có thể được thực hiện trong lúc khai báo biến cấu trúc. Các trường của cấu trúc được khởi tạo được đạt giữa 2 dấu { và }, chúng được phân cách nhau bởi dấu phẩy (,).</para>
+          <para id="id7909600">Ví dụ: Khởi tạo biến cấu trúc NgaySinh:</para>
+          <para id="id7768467">struct NgayThang NgaySinh ={29, 8, 1986};</para>
+        </section>
+      </section>
+      <section id="id-89805971556">
+        <title>CON TRỎ CẤU TRÚC</title>
+        <section id="id-219550536375">
+          <title>Khai báo</title>
+          <para id="id7768496">Việc khai báo một biến con trỏ kiểu cấu trúc cũng tương tự như khi khai báo một biến con trỏ khác, nghĩa là đặt thêm dấu * vào phía trước tên biến.</para>
+          <para id="id6365319">Cú pháp: struct &lt;Tên cấu trúc&gt; * &lt;Tên biến con trỏ&gt;;</para>
+          <para id="id6365334">Ví dụ: Ta có thể khai báo một con trỏ cấu trúc kiểu NgayThang như sau:</para>
+          <para id="id6365352">struct NgayThang *p; </para>
+          <para id="id6962566">/* NgayThang *p; // Nếu có định nghĩa kiểu */</para>
+        </section>
+        <section id="id-159244602411">
+          <title>Sử dụng các con trỏ kiểu cấu trúc</title>
+          <para id="id6962584">Khi khai báo biến con trỏ cấu trúc, biến con trỏ chưa có địa chỉ cụ thể. Lúc này nó chỉ mới được cấp phát 2 byte để lưu giữ địa chỉ và được ghi nhận là con trỏ chỉ đến 1 cấu trúc, nhưng chưa chỉ đến 1 đối tượng cụ thể. Muốn thao tác trên con trỏ cấu trúc hợp lệ, cũng tương tự như các con trỏ khác, ta phải:</para>
+          <para id="id7552939">- Cấp phát một vùng nhớ cho nó (sử dụng hàm malloc() hay calloc)</para>
+          <para id="id7552947">- Hoặc, cho nó quản lý địa chỉ của một biến cấu trúc nào đó.</para>
+          <para id="id7552955">Ví dụ: Sau khi khởi tạo giá trị của cấu trúc:</para>
+          <para id="id6361566">struct NgayThang Ngay = {29,8,1986};</para>
+          <para id="id6361579">p = &amp;Ngay;</para>
+          <para id="id6361585">lúc này biến con trỏ p đã chứa địa chỉ của Ngay.</para>
+        </section>
+        <section id="id-388883842083">
+          <title>Truy cập các thành phần của cấu trúc đang được quản lý bởi con trỏ</title>
+          <para id="id6361604">Để truy cập đến từng trường của 1 cấu trúc thông qua con trỏ của nó, ta sử dụng toán tử dấu mũi tên (-&gt;: dấu - và dấu &gt;).</para>
+          <para id="id7254647">Ngoài ra, ta vẫn có thể sử dụng đến phép toán * để truy cập vùng dữ liệu đang được quản lý bởi con trỏ cấu trúc để lấy thông tin cần thiết.</para>
+          <para id="id7254659">Ví dụ: Sử dụng con trỏ cấu trúc.</para>
+          <para id="id7254676">#include&lt;conio.h&gt;</para>
+          <para id="id7254680">#include&lt;stdio.h&gt;</para>
+          <para id="id7359148">typedef struct</para>
+          <para id="id7359152">{</para>
+          <para id="id7359156">unsigned char Ngay;</para>
+          <para id="id7359162">unsigned char Thang;</para>
+          <para id="id7359167">unsigned int Nam;</para>
+          <para id="id7359173">} NgayThang;</para>
+          <para id="id7359177">int main()</para>
+          <para id="id7359182">{</para>
+          <para id="id7359186">NgayThang Ng={29,8,1986};</para>
+          <para id="id6996874">NgayThang *p;</para>
+          <para id="id6996880">clrscr();</para>
+          <para id="id6996888">p=&amp;Ng;</para>
+          <para id="id6996894">printf("Truy cap binh thuong %d-%d-%d\n",</para>
+          <para id="id6996899">Ng.Ngay,Ng.Thang,Ng.Nam);</para>
+          <para id="id6996903">printf("Truy cap qua con tro %d-%d-%d\n",</para>
+          <para id="id6996908">p-&gt;Ngay,p-&gt;Thang,p-&gt;Nam);</para>
+          <para id="id6996913">printf("Truy cap qua vung nho con tro %d-%d-%d\n",</para>
+          <para id="id7655165">(*p).Ngay,(*p).Thang,(*p).Nam);</para>
+          <para id="id7655169">getch();</para>
+          <para id="id7655175">return 0;</para>
+          <para id="id7655180">}</para>
+          <para id="id7655184">Kết quả:</para>
+          <figure id="id7655192">
+            <media id="id1169038618472" alt=""><image src="../../media/graphics3-ede8.png" mime-type="image/png" height="75" width="366"/></media>
+          </figure>
+        </section>
+      </section>
+      <section id="id-36105371768">
+        <title>BÀI TẬP</title>
+        <section id="id-843533144441">
+          <title>Mục đích yêu cầu</title>
+          <para id="id7502101">Làm quen và biết cách sử dụng kiểu dữ liệu cấu trúc kết hợp với các kiểu dữ liệu đã học. Phân biệt kiểu dữ liệu mảng và kiểu cấu trúc. Thực hiện các bài tập trong phần nội dung.</para>
+        </section>
+        <section id="id-289274199295">
+          <title>Nội dung</title>
+          <para id="id7700077">1. Hãy định nghĩa kiểu:</para>
+          <para id="id7700082">struct Hoso{</para>
+          <para id="id7700094">char HoTen[40];</para>
+          <para id="id7700098">float Diem;</para>
+          <para id="id7700103">char Loai[10];</para>
+          <para id="id7700107">};</para>
+          <para id="id7631210">Viết chương trình nhập vào họ tên, điểm của n học sinh. Xếp loại văn hóa theo cách sau:</para>
+          <para id="id7631229">ĐiểmXếp loại</para>
+          <para id="id7631237">9, 10 Giỏi</para>
+          <para id="id7827704">7, 8 Khá</para>
+          <para id="id7827720">5, 6  Trung bình</para>
+          <para id="id7827733">dưới 5 Không đạt </para>
+          <para id="id6267876">In danh sách lên màn hình theo dạng sau:</para>
+          <para id="id6267888">XEP LOAI VAN HOA</para>
+          <para id="id6267902"> HO VA TEN DIEM XEPLOAI</para>
+          <para id="id6964576">Nguyen Van A 7 Kha</para>
+          <para id="id6964593">Ho Thi B 5 Trung binh</para>
+          <para id="id7201162">Dang Kim C  4 Khong dat </para>
+          <para id="id7201188">........................................................................................................</para>
+          <para id="id7201194">2. Xem một phân số là một cấu trúc có hai trường là tử số và mẫu số. Hãy viết chương trình thực hiện các phép toán cộng, trừ, nhân, chia hai phân số. (Các kết quả phải tối giản ).</para>
+          <para id="id7405916">3. Tạo một danh sách cán bộ công nhân viên, mỗi người người xem như một cấu trúc bao gồm các trường Ho, Ten, Luong, Tuoi, Dchi. Nhập một số người vào danh sách, sắp xếp tên theo thứ tự từ điển, in danh sách đã sắp xếp theo mẫu sau: </para>
+          <para id="id7405934">DANH SACH CAN BO CONG NHAN VIEN</para>
+          <para id="id7405938">| STT | HO VA TEN | LUONG | TUOI | DIACHI |</para>
+          <para id="id7019607">| 1 | Nguyen Van A | 333.00 | 26 | Can Tho |</para>
+          <para id="id7803338">| 2| Dang Kim B | 290.00 | 23 | Vinh Long | </para>
+        </section>
+      </section>
+    </section>
+  </content>
+</document>

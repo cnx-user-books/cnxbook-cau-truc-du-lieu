@@ -1,0 +1,707 @@
+<document xmlns="http://cnx.rice.edu/cnxml" xmlns:md="http://cnx.rice.edu/mdml">
+  <title>Kiểu con trỏ</title>
+  <metadata>
+  <md:content-id>m30628</md:content-id><md:title>Kiểu con trỏ</md:title>
+  <md:abstract>Học xong chương này, sinh viên sẽ nắm được các vấn đề sau:
++ Khái niệm về kiểu dữ liệu “con trỏ”.
++ Cách khai báo và cách sử dụng biến kiểu con trỏ.
++ Mối quan hệ giữa mảng và con trỏ.</md:abstract>
+  <md:uuid>d5a758b0-e28e-4c10-a624-828ee95e263e</md:uuid>
+</metadata>
+
+<content>
+    <section id="id-0671108701232">
+      <title>GIỚI THIỆU KIỂU DỮ LIỆU CON TRỎ</title>
+      <para id="id7555807">Các biến chúng ta đã biết và sử dụng trước đây đều là biến có kích thước và kiểu dữ liệu xác định. Người ta gọi các biến kiểu này là biến tĩnh. Khi khai báo biến tĩnh, một lượng ô nhớ cho các biến này sẽ được cấp phát mà không cần biết trong quá trình thực thi chương trình có sử dụng hết lượng ô nhớ này hay không. Mặt khác, các biến tĩnh dạng này sẽ tồn tại trong suốt thời gian thực thi chương trình dù có những biến mà chương trình chỉ sử dụng 1 lần rồi bỏ.</para>
+      <para id="id7555815">Một số hạn chế có thể gặp phải khi sử dụng các biến tĩnh:</para>
+      <list id="id7931656" list-type="bulleted">
+        <item>Cấp phát ô nhớ dư, gây ra lãng phí ô nhớ.</item>
+        <item>Cấp phát ô nhớ thiếu, chương trình thực thi bị lỗi.</item>
+      </list>
+      <para id="id7375770">Để tránh những hạn chế trên, ngôn ngữ C cung cấp cho ta một loại biến đặc biệt gọi là biến động với các đặc điểm sau:</para>
+      <list id="id7375780" list-type="bulleted">
+        <item>Chỉ phát sinh trong quá trình thực hiện chương trình chứ không phát sinh lúc bắt đầu chương trình.</item>
+        <item>Khi chạy chương trình, kích thước của biến, vùng nhớ và địa chỉ vùng nhớ được cấp phát cho biến có thể thay đổi.</item>
+        <item>Sau khi sử dụng xong có thể giải phóng để tiết kiệm chỗ trong bộ nhớ.</item>
+      </list>
+      <para id="id7914222">Tuy nhiên các biến động không có địa chỉ nhất định nên ta không thể truy cập đến chúng được. Vì thế, ngôn ngữ C lại cung cấp cho ta một loại biến đặc biệt nữa để khắc phục tình trạng này, đó là biến con trỏ (pointer) với các đặc điểm:</para>
+      <list id="id7201008" list-type="bulleted">
+        <item>Biến con trỏ không chứa dữ liệu mà chỉ chứa địa chỉ của dữ liệu hay chứa địa chỉ của ô nhớ chứa dữ liệu.</item>
+        <item>Kích thước của biến con trỏ không phụ thuộc vào kiểu dữ liệu, luôn có kích thước cố định là 2 byte.</item>
+      </list>
+    </section>
+    <section id="id-275751050362">
+      <title>KHAI BÁO VÀ SỬ DỤNG BIẾN CON TRỎ</title>
+      <section id="id-0994837565274">
+        <title>Khai báo biến con trỏ</title>
+        <para id="id7272234">Cú pháp: &lt;Kiểu&gt; * &lt;Tên con trỏ&gt;</para>
+        <para id="id7376677">Ý nghĩa: Khai báo một biến có tên là Tên con trỏ dùng để chứa địa chỉ của các biến có kiểu Kiểu.</para>
+        <para id="id7655038">Ví dụ 1: Khai báo 2 biến a,b có kiểu int và 2 biến pa, pb là 2 biến con trỏ kiểu int.</para>
+        <para id="id7655053">int a, b, *pa, *pb;</para>
+        <para id="id6268703">Ví dụ 2: Khai báo biến f kiểu float và biến pf là con trỏ float</para>
+        <para id="id6268717">float f, *pf;</para>
+        <para id="id6268730">Ghi chú: Nếu chưa muốn khai báo kiểu dữ liệu mà con trỏ ptr đang chỉ đến, ta sử dụng:</para>
+        <para id="id7154737">void *ptr;</para>
+        <para id="id7154747">Sau đó, nếu ta muốn con trỏ ptr chỉ đến kiểu dữ liệu gì cũng được. Tác dụng của khai báo này là chỉ dành ra 2 bytes trong bộ nhớ để cấp phát cho biến con trỏ ptr.</para>
+      </section>
+      <section id="id-94927598391">
+        <title>Các thao tác trên con trỏ</title>
+        <section id="id-00421416134081">
+          <title>Gán địa chỉ của biến cho biến con trỏ</title>
+          <para id="id6146404">Toán tử &amp; dùng để định vị con trỏ đến địa chỉ của một biến đang làm việc.</para>
+          <para id="id6146417">Cú pháp: &lt;Tên biến con trỏ&gt;=&amp;&lt;Tên biến&gt;</para>
+          <para id="id6146430">Giải thích: Ta gán địa chỉ của biến Tên biến cho con trỏ Tên biến con trỏ.</para>
+          <para id="id7757018">Ví dụ: Gán địa chỉ của biến a cho con trỏ pa, gán địa chỉ của biến b cho con trỏ pb.</para>
+          <para id="id7586560">pa=&amp;a; pb=&amp;b;</para>
+          <para id="id7586564">Lúc này, hình ảnh của các biến trong bộ nhớ được mô tả:</para>
+          <table id="id7586571" summary="">
+            <tgroup cols="12">
+              <colspec colnum="1" colname="c1"/>
+              <colspec colnum="2" colname="c2"/>
+              <colspec colnum="3" colname="c3"/>
+              <colspec colnum="4" colname="c4"/>
+              <colspec colnum="5" colname="c5"/>
+              <colspec colnum="6" colname="c6"/>
+              <colspec colnum="7" colname="c7"/>
+              <colspec colnum="8" colname="c8"/>
+              <colspec colnum="9" colname="c9"/>
+              <colspec colnum="10" colname="c10"/>
+              <colspec colnum="11" colname="c11"/>
+              <colspec colnum="12" colname="c12"/>
+              <tbody>
+                <row>
+                  <entry/>
+                  <entry/>
+                  <entry/>
+                  <entry>a</entry>
+                  <entry>b</entry>
+                  <entry/>
+                  <entry/>
+                  <entry/>
+                  <entry/>
+                  <entry/>
+                  <entry>Bộ nhớ</entry>
+                  <entry/>
+                </row>
+                <row>
+                  <entry/>
+                  <entry>pa</entry>
+                  <entry>pb</entry>
+                  <entry>2 byte</entry>
+                  <entry>2 byte</entry>
+                  <entry/>
+                  <entry/>
+                  <entry/>
+                  <entry/>
+                  <entry/>
+                  <entry/>
+                  <entry/>
+                </row>
+              </tbody>
+            </tgroup>
+          </table>
+          <para id="id7633478">Lưu ý: </para>
+          <para id="id7682382">Khi gán địa chỉ của biến tĩnh cho con trỏ cần phải lưu ý kiểu dữ liệu của chúng. Ví dụ sau đây không đúng do không tương thích kiểu:</para>
+          <para id="id7682396">int Bien_Nguyen;</para>
+          <para id="id7157370">float *Con_Tro_Thuc;</para>
+          <para id="id7587179">...</para>
+          <para id="id7587195">Con_Tro_Thuc=&amp;Bien_Nguyen;</para>
+          <para id="id7645412">Phép gán ở đây là sai vì Con_Tro_Thuc là một con trỏ kiểu float (nó chỉ có thể chứa được địa chỉ của biến kiểu float); trong khi đó, Bien_Nguyen có kiểu int.</para>
+        </section>
+        <section id="id-184933390393">
+          <title>Nội dung của ô nhớ con trỏ chỉ tới</title>
+          <para id="id6996708">Để truy cập đến nội dung của ô nhớ mà con trỏ chỉ tới, ta sử dụng cú pháp:</para>
+          <para id="id6996718">*&lt;Tên biến con trỏ&gt;</para>
+          <para id="id7648164">Với cách truy cập này thì *&lt;Tên biến con trỏ&gt; có thể coi là một biến có kiểu được mô tả trong phần khai báo biến con trỏ.</para>
+          <para id="id7648185">Ví dụ: Ví dụ sau đây cho phép khai báo, gán địa chỉ cũng như lấy nội dung vùng nhớ của biến con trỏ:</para>
+          <para id="id5867941">int x=100;</para>
+          <para id="id5867946">int *ptr;</para>
+          <para id="id5867952">ptr=&amp;x;</para>
+          <para id="id7494597">int y= *ptr;</para>
+          <para id="id7494605">Lưu ý: Khi gán địa chỉ của một biến cho một biến con trỏ, mọi sự thay đổi trên nội dung ô nhớ con trỏ chỉ tới sẽ làm giá trị của biến thay đổi theo (thực chất nội dung ô nhớ và biến chỉ là một).</para>
+          <para id="id7587208">Ví dụ: Đoạn chương trình sau thấy rõ sự thay đổi này :</para>
+          <para id="id7373940">#include &lt;stdio.h&gt;</para>
+          <para id="id7373944">#include &lt;conio.h&gt;</para>
+          <para id="id7373949">int main()</para>
+          <para id="id7373953">{</para>
+          <para id="id7250524">int a,b,*pa,*pb;</para>
+          <para id="id7250530">a=2;</para>
+          <para id="id7250535">b=3;</para>
+          <para id="id7250541">clrscr();</para>
+          <para id="id7250546">printf("\nGia tri cua bien a=%d \nGia tri cua bien b=%d ",a,b);</para>
+          <para id="id7250553">pa=&amp;a;</para>
+          <para id="id7374419">pb=&amp;b;</para>
+          <para id="id7374425">printf("\nNoi dung cua o nho con tro pa tro toi=%d",*pa);</para>
+          <para id="id7374434">printf("\nNoi dung cua o nho con tro pb tro toi=%d ",*pb);</para>
+          <para id="id7374441">*pa=20; /* Thay đổi giá trị của *pa*/</para>
+          <para id="id6268467">*pb=20; /* Thay đổi giá trị của *pb*/</para>
+          <para id="id6268474">printf("\nGia tri moi cua bien a=%d \n</para>
+          <para id="id6268480">Gia tri moi cua bien b=%d ",a,b); /* a, b thay đổi theo*/</para>
+          <para id="id6268489">getch();</para>
+          <para id="id7803425">return 0;</para>
+          <para id="id7803430">}</para>
+          <para id="id7803435">Kết quả thực hiện chương trình:</para>
+          <figure id="id7803444">
+            <media id="id1169422159293" alt=""><image src="../../media/graphics1-0251.png" mime-type="image/png" height="128" width="350"/></media>
+          </figure>
+        </section>
+        <section id="id-534356747238">
+          <title>Cấp phát vùng nhớ cho biến con trỏ</title>
+          <para id="id6994339">Trước khi sử dụng biến con trỏ, ta nên cấp phát vùng nhớ cho biến con trỏ này quản lý địa chỉ. Việc cấp phát được thực hiện nhờ các hàm malloc(), calloc() trong thư viện alloc.h.</para>
+          <para id="id7578262">Cú pháp các hàm:</para>
+          <para id="id7578278">void *malloc(size_t size): Cấp phát vùng nhớ có kích thước là size.</para>
+          <para id="id7690631">void *calloc(size_t nitems, size_t size): Cấp phát vùng nhớ có kích thước là nitems*size.</para>
+          <para id="id6261765">Ví dụ: Giả sử ta có khai báo:</para>
+          <para id="id6261782">int a, *pa, *pb;</para>
+          <para id="id6261789">pa = (int*)malloc(sizeof(int)); /* Cấp phát vùng nhớ có kích thước bằng với kích thước của một số nguyên */</para>
+          <para id="id6967194">pb= (int*)calloc(10, sizeof(int)); /* Cấp phát vùng nhớ có thể chứa được 10 số nguyên*/</para>
+          <para id="id7323210">Lúc này hình ảnh trong bộ nhớ như sau:</para>
+          <table id="id7323221" summary="">
+            <tgroup cols="20">
+              <colspec colnum="1" colname="c1"/>
+              <colspec colnum="2" colname="c2"/>
+              <colspec colnum="3" colname="c3"/>
+              <colspec colnum="4" colname="c4"/>
+              <colspec colnum="5" colname="c5"/>
+              <colspec colnum="6" colname="c6"/>
+              <colspec colnum="7" colname="c7"/>
+              <colspec colnum="8" colname="c8"/>
+              <colspec colnum="9" colname="c9"/>
+              <colspec colnum="10" colname="c10"/>
+              <colspec colnum="11" colname="c11"/>
+              <colspec colnum="12" colname="c12"/>
+              <colspec colnum="13" colname="c13"/>
+              <colspec colnum="14" colname="c14"/>
+              <colspec colnum="15" colname="c15"/>
+              <colspec colnum="16" colname="c16"/>
+              <colspec colnum="17" colname="c17"/>
+              <colspec colnum="18" colname="c18"/>
+              <colspec colnum="19" colname="c19"/>
+              <colspec colnum="20" colname="c20"/>
+              <tbody>
+                <row>
+                  <entry/>
+                  <entry/>
+                  <entry/>
+                  <entry/>
+                  <entry/>
+                  <entry/>
+                  <entry/>
+                  <entry/>
+                  <entry>0</entry>
+                  <entry>1</entry>
+                  <entry>2</entry>
+                  <entry>3</entry>
+                  <entry>4</entry>
+                  <entry>5</entry>
+                  <entry>6</entry>
+                  <entry>7</entry>
+                  <entry>8</entry>
+                  <entry>9</entry>
+                  <entry/>
+                  <entry/>
+                </row>
+                <row>
+                  <entry/>
+                  <entry/>
+                  <entry/>
+                  <entry/>
+                  <entry/>
+                  <entry/>
+                  <entry/>
+                  <entry/>
+                  <entry/>
+                  <entry/>
+                  <entry/>
+                  <entry/>
+                  <entry/>
+                  <entry/>
+                  <entry/>
+                  <entry/>
+                  <entry/>
+                  <entry/>
+                  <entry/>
+                  <entry/>
+                </row>
+                <row>
+                  <entry/>
+                  <entry>pa</entry>
+                  <entry namest="c3" nameend="c5">2 byte</entry>
+                  <entry/>
+                  <entry>pb</entry>
+                  <entry/>
+                  <entry/>
+                  <entry/>
+                  <entry namest="c11" nameend="c13">2 byte</entry>
+                  <entry/>
+                  <entry/>
+                  <entry/>
+                  <entry/>
+                  <entry/>
+                  <entry/>
+                  <entry/>
+                </row>
+              </tbody>
+            </tgroup>
+          </table>
+          <para id="id7760097">Lưu ý: Khi sử dụng hàm malloc() hay calloc(), ta phải ép kiểu vì nguyên mẫu các hàm này trả về con trỏ kiểu void.</para>
+        </section>
+        <section id="id-770522809958">
+          <title>Cấp phát lại vùng nhớ cho biến con trỏ</title>
+          <para id="id7192495">Trong quá trình thao tác trên biến con trỏ, nếu ta cần cấp phát thêm vùng nhớ có kích thước lớn hơn vùng nhớ đã cấp phát, ta sử dụng hàm realloc().</para>
+          <para id="id7192506">Cú pháp: void *realloc(void *block, size_t size)</para>
+          <para id="id7152527">Ý nghĩa:</para>
+          <para id="id7152543">- Cấp phát lại 1 vùng nhớ cho con trỏ block quản lý, vùng nhớ này có kích thước mới là size; khi cấp phát lại thì nội dung vùng nhớ trước đó vẫn tồn tại.</para>
+          <para id="id7573971">- Kết quả trả về của hàm là địa chỉ đầu tiên của vùng nhớ mới. Địa chỉ này có thể khác với địa chỉ được chỉ ra khi cấp phát ban đầu.</para>
+          <para id="id7535033">Ví dụ: Trong ví dụ trên ta có thể cấp phát lại vùng nhớ do con trỏ pa quản lý như sau: </para>
+          <para id="id7535048">int a, *pa;</para>
+          <para id="id7945620">pa=(int*)malloc(sizeof(int)); /*Cấp phát vùng nhớ có kích thước 2 byte*/</para>
+          <para id="id7945632">pa = realloc(pa, 6); /* Cấp phát lại vùng nhớ có kích thước 6 byte*/</para>
+        </section>
+        <section id="id-0209174706045">
+          <title>Giải phóng vùng nhớ cho biến con trỏ</title>
+          <para id="id7454169">Một vùng nhớ đã cấp phát cho biến con trỏ, khi không còn sử dụng nữa, ta sẽ thu hồi lại vùng nhớ này nhờ hàm free().</para>
+          <para id="id7454183">Cú pháp:void free(void *block)</para>
+          <para id="id7201025">Ý nghĩa: Giải phóng vùng nhớ được quản lý bởi con trỏ block.</para>
+          <para id="id7201046">Ví dụ: Ở ví dụ trên, sau khi thực hiện xong, ta giải phóng vùng nhớ cho 2 biến con trỏ pa &amp; pb:</para>
+          <para id="id7317880">free(pa);</para>
+          <para id="id7317887">free(pb);</para>
+        </section>
+        <section id="id-104459623874">
+          <title>Một số phép toán trên con trỏ</title>
+          <para id="id7862777">a. Phép gán con trỏ: Hai con trỏ cùng kiểu có thể gán cho nhau.</para>
+          <para id="id7862795">Ví dụ:</para>
+          <para id="id7391196">int a, *p, *a ; float *f;</para>
+          <para id="id7391210">a = 5 ; p = &amp;a ; q = p ; /* đúng */</para>
+          <para id="id7391216">f = p ; /* sai do khác kiểu */</para>
+          <para id="id7391221">Ta cũng có thể ép kiểu con trỏ theo cú pháp:</para>
+          <para id="id7930896">(&lt;Kiểu kết quả&gt;*)&lt;Tên con trỏ&gt;</para>
+          <para id="id7930910">Chẳng hạn, ví dụ trên được viết lại:</para>
+          <para id="id6268761">int a, *p, *a ; float *f;</para>
+          <para id="id6268775">a = 5 ; p = &amp;a ; q = p ; /* đúng */</para>
+          <para id="id7255418">f = (float*)p; /* Đúng nhờ ép kiểu*/</para>
+          <para id="id7255426">b. Cộng, trừ con trỏ với một số nguyên</para>
+          <para id="id7255436">Ta có thể cộng (+), trừ (-) 1 con trỏ với 1 số nguyên N nào đó; kết quả trả về là 1 con trỏ. Con trỏ này chỉ đến vùng nhớ cách vùng nhớ của con trỏ hiện tại N phần tử.</para>
+          <para id="id7654106"> Ví dụ: Cho đoạn chương trình sau:</para>
+          <para id="id7654123">int *pa;</para>
+          <para id="id7645382">pa = (int*) malloc(20); /* Cấp phát vùng nhớ 20 byte=10 số nguyên*/</para>
+          <para id="id7645394">int *pb, *pc;</para>
+          <para id="id7645400">pb = pa + 7;</para>
+          <para id="id7560150">pc = pb - 3;</para>
+          <para id="id7560157">Lúc này hình ảnh của pa, pb, pc như sau:</para>
+          <table id="id7560164" summary="">
+            <tgroup cols="16">
+              <colspec colnum="1" colname="c1"/>
+              <colspec colnum="2" colname="c2"/>
+              <colspec colnum="3" colname="c3"/>
+              <colspec colnum="4" colname="c4"/>
+              <colspec colnum="5" colname="c5"/>
+              <colspec colnum="6" colname="c6"/>
+              <colspec colnum="7" colname="c7"/>
+              <colspec colnum="8" colname="c8"/>
+              <colspec colnum="9" colname="c9"/>
+              <colspec colnum="10" colname="c10"/>
+              <colspec colnum="11" colname="c11"/>
+              <colspec colnum="12" colname="c12"/>
+              <colspec colnum="13" colname="c13"/>
+              <colspec colnum="14" colname="c14"/>
+              <colspec colnum="15" colname="c15"/>
+              <colspec colnum="16" colname="c16"/>
+              <tbody>
+                <row>
+                  <entry/>
+                  <entry/>
+                  <entry/>
+                  <entry/>
+                  <entry>0</entry>
+                  <entry>1</entry>
+                  <entry>2</entry>
+                  <entry>3</entry>
+                  <entry>4</entry>
+                  <entry>5</entry>
+                  <entry>6</entry>
+                  <entry>7</entry>
+                  <entry>8</entry>
+                  <entry>9</entry>
+                  <entry/>
+                  <entry/>
+                </row>
+                <row>
+                  <entry/>
+                  <entry/>
+                  <entry/>
+                  <entry/>
+                  <entry/>
+                  <entry/>
+                  <entry/>
+                  <entry/>
+                  <entry/>
+                  <entry/>
+                  <entry/>
+                  <entry/>
+                  <entry/>
+                  <entry/>
+                  <entry/>
+                  <entry/>
+                </row>
+                <row>
+                  <entry/>
+                  <entry/>
+                  <entry>pa</entry>
+                  <entry/>
+                  <entry/>
+                  <entry/>
+                  <entry>pc</entry>
+                  <entry/>
+                  <entry/>
+                  <entry>pb</entry>
+                  <entry/>
+                  <entry/>
+                  <entry/>
+                  <entry/>
+                  <entry/>
+                  <entry/>
+                </row>
+              </tbody>
+            </tgroup>
+          </table>
+          <para id="id7169054">c. Con trỏ NULL: là con trỏ không chứa địa chỉ nào cả. Ta có thể gán giá trị NULL cho 1 con trỏ có kiểu bất kỳ.</para>
+          <para id="id7169075">d. Lưu ý:</para>
+          <para id="id7645236">- Ta không thể cộng 2 con trỏ với nhau.</para>
+          <para id="id7645246">- Phép trừ 2 con trỏ cùng kiểu sẽ trả về 1 giá trị nguyên (int). Đây chính là khoảng cách (số phần tử) giữa 2 con trỏ đó. Chẳng hạn, trong ví dụ trên pc-pa=4.</para>
+        </section>
+      </section>
+    </section>
+    <section id="id-146684788442">
+      <title>CON TRỎ VÀ MẢNG</title>
+      <section id="id-685496151437">
+        <title>Con trỏ và mảng 1 chiều</title>
+        <para id="id7909417">Giữa mảng và con trỏ có một sự liên hệ rất chặt chẽ. Những phần tử của mảng có thể được xác định bằng chỉ số trong mảng, bên cạnh đó chúng cũng có thể được xác lập qua biến con trỏ.</para>
+        <section id="id-7405336852">
+          <title>Truy cập các phần tử mảng theo dạng con trỏ</title>
+          <para id="id7909442">Ta có các quy tắc sau:</para>
+          <para id="id6996215">&amp;&lt;Tên mảng&gt;[0] tương đương với &lt;Tên mảng&gt;</para>
+          <para id="id7032667">&amp;&lt;Tên mảng&gt; [&lt;Vị trí&gt;] tương đương với &lt;Tên mảng&gt; + &lt;Vị trí&gt;</para>
+          <para id="id7959635">&lt;Tên mảng&gt;[&lt;Vị trí&gt;] tương đương với *(&lt;Tên mảng&gt; + &lt;Vị trí&gt;)</para>
+          <para id="id6967937">Ví dụ: Cho 1 mảng 1 chiều các số nguyên a có 5 phần tử, truy cập các phần tử theo kiểu mảng và theo kiểu con trỏ.</para>
+          <para id="id6967958">#include &lt;stdio.h&gt;</para>
+          <para id="id7222395">#include &lt;conio.h&gt;</para>
+          <para id="id7222399">/* Nhập mảng bình thường*/</para>
+          <para id="id7222409">void NhapMang(int a[], int N){</para>
+          <para id="id7222413">int i;</para>
+          <para id="id7222418">for(i=0;i&lt;N;i++)</para>
+          <para id="id7222424">{</para>
+          <para id="id7370507">printf("Phan tu thu %d: ",i);scanf("%d",&amp;a[i]);</para>
+          <para id="id7370514">}</para>
+          <para id="id7370520">}</para>
+          <para id="id7370524">/* Nhập mảng theo dạng con trỏ*/</para>
+          <para id="id7370534">void NhapContro(int a[], int N)</para>
+          <para id="id7243123">{</para>
+          <para id="id7243127">int i;</para>
+          <para id="id7243132">for(i=0;i&lt;N;i++){</para>
+          <para id="id7243138">printf("Phan tu thu %d: ",i);scanf("%d",a+i);</para>
+          <para id="id7243145">}</para>
+          <para id="id7243150">}</para>
+          <para id="id7685432">int main()</para>
+          <para id="id7685437">{</para>
+          <para id="id7685441">int a[20],N,i;</para>
+          <para id="id7685449">clrscr();</para>
+          <para id="id7685458">printf("So phan tu N= ");scanf("%d",&amp;N);</para>
+          <para id="id7481644">NhapMang(a,N); /* NhapContro(a,N)*/</para>
+          <para id="id7481652">printf("Truy cap theo kieu mang: ");</para>
+          <para id="id7481658">for(i=0;i&lt;N;i++)</para>
+          <para id="id7481666">printf("%d ",a[i]);</para>
+          <para id="id7481673">printf("\nTruy cap theo kieu con tro: ");</para>
+          <para id="id7240647">for(i=0;i&lt;N;i++)</para>
+          <para id="id7240653">printf("%d ",*(a+i));</para>
+          <para id="id7240659">getch();</para>
+          <para id="id7240667">return 0;</para>
+          <para id="id7240673">}</para>
+          <para id="id7648005">Kết quả thực thi của chương trình:</para>
+          <figure id="id7648014">
+            <media id="id4990824" alt=""><image src="../../media/graphics2-9a85.png" mime-type="image/png" height="123" width="350"/></media>
+          </figure>
+        </section>
+        <section id="id-647653077488">
+          <title>Truy xuất từng phần tử đang được quản lý bởi con trỏ theo dạng mảng</title>
+          <para id="id7481623">&lt;Tên biến&gt;[&lt;Vị trí&gt;] tương đương với *(&lt;Tên biến&gt; + &lt;Vị trí&gt;)</para>
+          <para id="id7481636">&amp;&lt;Tên biến&gt;[&lt;Vị trí&gt;] tương đương với (&lt;Tên biến&gt; + &lt;Vị trí&gt;)</para>
+          <para id="id7863188">Trong đó &lt;Tên biến&gt; là biến con trỏ, &lt;Vị trí&gt; là 1 biểu thức số nguyên.</para>
+          <para id="id7863195">Ví dụ: Giả sử có khai báo:</para>
+          <para id="id7451177">#include &lt;stdio.h&gt;</para>
+          <para id="id7451182">#include &lt;alloc.h&gt;</para>
+          <para id="id7451186">#include &lt;conio.h&gt;</para>
+          <para id="id7451191">int main(){</para>
+          <para id="id7749032">int *a;</para>
+          <para id="id7749037">int i;</para>
+          <para id="id7749046">clrscr();</para>
+          <para id="id7749054">a=(int*)malloc(sizeof(int)*10);</para>
+          <para id="id7749059">for(i=0;i&lt;10;i++)</para>
+          <para id="id6264923">a[i] = 2*i;</para>
+          <para id="id6264929">printf("Truy cap theo kieu mang: ");</para>
+          <para id="id6264935">for(i=0;i&lt;10;i++)</para>
+          <para id="id6264940">printf("%d ",a[i]);</para>
+          <para id="id6264947">printf("\nTruy cap theo kieu con tro: ");</para>
+          <para id="id7691442">for(i=0;i&lt;10;i++)</para>
+          <para id="id7691446">printf("%d ",*(a+i));</para>
+          <para id="id7691453">getch();</para>
+          <para id="id7691458">return 0;</para>
+          <para id="id7691464">}</para>
+          <para id="id7691468">Kết quả chương trình:</para>
+          <figure id="id6965344">
+            <media id="id8780567" alt=""><image src="../../media/graphics3-9712.png" mime-type="image/png" height="76" width="450"/></media>
+          </figure>
+          <para id="id6965368">Với khai báo ở trên, hình ảnh của con trỏ a trong bộ nhớ:</para>
+          <table id="id7455864" summary="">
+            <tgroup cols="20">
+              <colspec colnum="1" colname="c1"/>
+              <colspec colnum="2" colname="c2"/>
+              <colspec colnum="3" colname="c3"/>
+              <colspec colnum="4" colname="c4"/>
+              <colspec colnum="5" colname="c5"/>
+              <colspec colnum="6" colname="c6"/>
+              <colspec colnum="7" colname="c7"/>
+              <colspec colnum="8" colname="c8"/>
+              <colspec colnum="9" colname="c9"/>
+              <colspec colnum="10" colname="c10"/>
+              <colspec colnum="11" colname="c11"/>
+              <colspec colnum="12" colname="c12"/>
+              <colspec colnum="13" colname="c13"/>
+              <colspec colnum="14" colname="c14"/>
+              <colspec colnum="15" colname="c15"/>
+              <colspec colnum="16" colname="c16"/>
+              <colspec colnum="17" colname="c17"/>
+              <colspec colnum="18" colname="c18"/>
+              <colspec colnum="19" colname="c19"/>
+              <colspec colnum="20" colname="c20"/>
+              <tbody>
+                <row>
+                  <entry/>
+                  <entry/>
+                  <entry/>
+                  <entry/>
+                  <entry/>
+                  <entry/>
+                  <entry/>
+                  <entry/>
+                  <entry>0</entry>
+                  <entry>1</entry>
+                  <entry>2</entry>
+                  <entry>3</entry>
+                  <entry>4</entry>
+                  <entry>5</entry>
+                  <entry>6</entry>
+                  <entry>7</entry>
+                  <entry>8</entry>
+                  <entry>9</entry>
+                  <entry/>
+                  <entry/>
+                </row>
+                <row>
+                  <entry/>
+                  <entry/>
+                  <entry/>
+                  <entry/>
+                  <entry/>
+                  <entry/>
+                  <entry/>
+                  <entry/>
+                  <entry>0</entry>
+                  <entry>2</entry>
+                  <entry>4</entry>
+                  <entry>6</entry>
+                  <entry>8</entry>
+                  <entry>10</entry>
+                  <entry>12</entry>
+                  <entry>14</entry>
+                  <entry>16</entry>
+                  <entry>18</entry>
+                  <entry/>
+                  <entry/>
+                </row>
+                <row>
+                  <entry/>
+                  <entry/>
+                  <entry namest="c3" nameend="c5"/>
+                  <entry/>
+                  <entry>a</entry>
+                  <entry/>
+                  <entry/>
+                  <entry/>
+                  <entry namest="c11" nameend="c13">2 byte</entry>
+                  <entry/>
+                  <entry/>
+                  <entry/>
+                  <entry/>
+                  <entry/>
+                  <entry/>
+                  <entry/>
+                </row>
+              </tbody>
+            </tgroup>
+          </table>
+        </section>
+        <section id="id-94102897118">
+          <title>Con trỏ chỉ đến phần tử mảng</title>
+          <para id="id7159260">Giả sử con trỏ ptr chỉ đến phần tử a[i] nào đó của mảng a thì:</para>
+          <para id="id7159272">ptr + j chỉ đến phần tử thứ j sau a[i], tức a[i+j]</para>
+          <para id="id7450872">ptr - j chỉ đến phần tử đứng trước a[i], tức a[i-j]</para>
+          <para id="id7450885">Ví dụ: Giả sử có 1 mảng mang_int, cho con trỏ contro_int chỉ đến phần tử thứ 5 trong mảng. In ra các phần tử của contro_int &amp; mang_int.</para>
+          <para id="id7192522">#include &lt;stdio.h&gt;</para>
+          <para id="id7450902">#include &lt;conio.h&gt;</para>
+          <para id="id7192529">#include &lt;alloc.h&gt;</para>
+          <para id="id7192533">int main()</para>
+          <para id="id7192538">{</para>
+          <para id="id7192542">int i,mang_int[10];</para>
+          <para id="id7192548">int *contro_int;</para>
+          <para id="id6149781">clrscr();</para>
+          <para id="id6149787">for(i=0;i&lt;=9;i++)</para>
+          <para id="id6149792">mang_int[i]=i*2;</para>
+          <para id="id6149799">contro_int=&amp;mang_int[5];</para>
+          <para id="id6149805">printf("\nNoi dung cua mang_int ban dau=");</para>
+          <para id="id6149810">for (i=0;i&lt;=9;i++)</para>
+          <para id="id7710103">printf("%d ",mang_int[i]);</para>
+          <para id="id7710112">printf("\nNoi dung cua contro_int ban dau =");</para>
+          <para id="id7710118">for (i=0;i&lt;5;i++)</para>
+          <para id="id7710124">printf("%d ",contro_int[i]);</para>
+          <para id="id6989413">for(i=0;i&lt;5;i++)</para>
+          <para id="id6989419">contro_int[i]++;</para>
+          <para id="id6989428">printf("\n--------------------------------------------------------");</para>
+          <para id="id6989438">printf("\nNoi dung cua mang_int sau khi tang 1=");</para>
+          <para id="id6264734">for (i=0;i&lt;=9;i++)</para>
+          <para id="id6264743">printf("%d ",mang_int[i]);</para>
+          <para id="id6264752">printf("\nNoi dung cua contro_int sau khi tang 1=");</para>
+          <para id="id6264762">for (i=0;i&lt;5;i++)</para>
+          <para id="id5867713">printf("%d ",contro_int[i]);</para>
+          <para id="id5867722">if (contro_int!=NULL)</para>
+          <para id="id5867727"> free(contro_int);</para>
+          <para id="id5867732">getch();</para>
+          <para id="id5867738">return 0;</para>
+          <para id="id7452215">}</para>
+          <para id="id7452218">Kết quả chương trình</para>
+          <figure id="id7452227">
+            <media id="id1169418460218" alt=""><image src="../../media/graphics4-fb01.png" mime-type="image/png" height="112" width="575"/></media>
+          </figure>
+        </section>
+      </section>
+      <section id="id-671098532554">
+        <title>Con trỏ và mảng nhiều chiều</title>
+        <para id="id7229513">Ta có thể sử dụng con trỏ thay cho mảng nhiều chiều như sau:</para>
+        <para id="id7229520">Giả sử ta có mảng 2 chiều và biến con trỏ như sau:</para>
+        <para id="id7229526">int a[n][m];</para>
+        <para id="id7762089">int *contro_int;</para>
+        <para id="id7762098">Thực hiện phép gán contro_int=a;</para>
+        <para id="id7762107">Khi đó phần tử a[0][0]được quản lý bởi contro_int;</para>
+        <para id="id7762117">a[0][1]được quản lý bởi contro_int+1;</para>
+        <para id="id6517295">a[0][2]được quản lý bởi contro_int+2;</para>
+        <para id="id6517306">...</para>
+        <para id="id6517311">a[1][0]được quản lý bởi contro_int+m;</para>
+        <para id="id7156412">a[1][1]được quản lý bởi contro_int+m+1;</para>
+        <para id="id7156423">...</para>
+        <para id="id7156427">a[n][m]được quản lý bởi contro_int+n*m;</para>
+        <para id="id7156438">Tương tự như thế đối với mảng nhiều hơn 2 chiều.</para>
+        <para id="id6964154">Ví dụ: Sự tương đương giữa mảng 2 chiều và con trỏ.</para>
+        <para id="id6964167">#include &lt;stdio.h&gt;</para>
+        <para id="id6964172">#include &lt;conio.h&gt;</para>
+        <para id="id6964177">#include &lt;alloc.h&gt;</para>
+        <para id="id6964181">int main()</para>
+        <para id="id7159157">{</para>
+        <para id="id7159161">int i,j;</para>
+        <para id="id7159167">int mang_int[4][5]={1,2,3,4,5,6,7,8,9,10,11,12,13,14,</para>
+        <para id="id7159175">15,16,17,18,19,20};</para>
+        <para id="id7159179">int *contro_int;</para>
+        <para id="id7159185">clrscr();</para>
+        <para id="id7203690">contro_int=(int*)mang_int;</para>
+        <para id="id7203695">printf("\nNoi dung cua mang_int ban dau=");</para>
+        <para id="id7203700">for (i=0;i&lt;4;i++)</para>
+        <para id="id7203706">{</para>
+        <para id="id7203711">printf("\n");</para>
+        <para id="id7203717">for (j=0;j&lt;5;j++)</para>
+        <para id="id7255511">printf("%d\t",mang_int[i][j]);</para>
+        <para id="id7255519">}</para>
+        <para id="id7255524">printf("\n---------------------------------");</para>
+        <para id="id7255530">printf("\nNoi dung cua contro_int ban dau \n");</para>
+        <para id="id7255536">for (i=0;i&lt;20;i++)</para>
+        <para id="id7457686">printf("%d ",contro_int[i]);</para>
+        <para id="id7457692">for(i=0;i&lt;20;i++)</para>
+        <para id="id7457697">contro_int[i]++;</para>
+        <para id="id7457706">printf("\n--------------------------------------------------------");</para>
+        <para id="id7457715">printf("\nNoi dung cua mang_int sau khi tang 1=");</para>
+        <para id="id7269335">for (i=0;i&lt;4;i++)</para>
+        <para id="id7269344">{</para>
+        <para id="id7269349">printf("\n");</para>
+        <para id="id7269356">for (j=0;j&lt;5;j++)</para>
+        <para id="id7533827">printf("%d\t",mang_int[i][j]);</para>
+        <para id="id7533834">}</para>
+        <para id="id7533840">printf("\nNoi dung cua contro_int sau khi tang 1=\n");</para>
+        <para id="id7533846">for (i=0;i&lt;20;i++)</para>
+        <para id="id7533852"> printf("%d ",contro_int[i]);</para>
+        <para id="id7456805">if (contro_int!=NULL)</para>
+        <para id="id7456809"> free(contro_int);</para>
+        <para id="id7456814">getch();</para>
+        <para id="id7456820">return 0;</para>
+        <para id="id7456825">}</para>
+        <para id="id7456829">Kết quả thực hiện chương trình như sau:</para>
+        <para id="id7456835">
+        ***SORRY, THIS MEDIA TYPE IS NOT SUPPORTED.***
+      </para>
+      </section>
+    </section>
+    <section id="id-763166726245">
+      <title>CON TRỎ VÀ THAM SỐ HÌNH THỨC CỦA HÀM</title>
+      <para id="id7776932">Khi tham số hình thức của hàm là một con trỏ thì theo nguyên tắc gọi hàm ta dùng tham số thực tế là 1 con trỏ có kiểu giống với kiểu của tham số hình thức. Nếu lúc thực thi hàm ta có sự thay đổi trên nội dung vùng nhớ được chỉ bởi con trỏ tham số hình thức thì lúc đó nội dung vùng nhớ được chỉ bởi tham số thực tế cũng sẽ bị thay đổi theo.</para>
+      <para id="id7776951">Ví dụ : Xét hàm hoán vị được viết như sau :</para>
+      <para id="id7774872">#include&lt;stdio.h&gt;</para>
+      <para id="id7774876">#include&lt;conio.h&gt;</para>
+      <para id="id7774881">void HoanVi(int *a, int *b)</para>
+      <para id="id7774885">{</para>
+      <para id="id7774889">int c=*a;</para>
+      <para id="id7774895">*a=*b;</para>
+      <para id="id7547718">*b=c;</para>
+      <para id="id7547724">}</para>
+      <para id="id7547728">int main()</para>
+      <para id="id7547732">{</para>
+      <para id="id7547736">int m=20,n=30;</para>
+      <para id="id7547742">clrscr();</para>
+      <para id="id7547750">printf("Truoc khi goi ham m= %d, n= %d\n",m,n);</para>
+      <para id="id6265694">HoanVi(&amp;m,&amp;n);</para>
+      <para id="id6265700">printf("Sau khi goi ham m= %d, n= %d",m,n);</para>
+      <para id="id6265705">getch();</para>
+      <para id="id6265711">return 0;</para>
+      <para id="id6265716">}</para>
+      <para id="id6265720">Kết quả thực thi chương trình:</para>
+      <figure id="id6363456">
+        <media id="id1169425405360" alt=""><image src="../../media/graphics5-7673.png" mime-type="image/png" height="70" width="308"/></media>
+      </figure>
+      <section id="id-379796270241">
+        <title>m=20n=30&amp;m&amp;nm=20n=30abm=30n=20&amp;m&amp;nm=30n=20&amp;m&amp;nTrước khi gọi hàmKhi gọi hàmSau khi gọi hàm:</title>
+        <para id="id7306972">
+          <!--Empty sections are illegal in CNXML 0.5.  This empty paragraph is a place holder that added as a byproduct of the word importer.-->
+        </para>
+      </section>
+      <section id="id-405023510779">
+        <title>a=&amp;m; b= &amp;n; Con trỏ a, b bị giải phóng</title>
+        <para id="id7381782">
+          <!--Empty sections are illegal in CNXML 0.5.  This empty paragraph is a place holder that added as a byproduct of the word importer.-->
+        </para>
+      </section>
+      <section id="id-270953253244">
+        <title>Lúc này : *a=m; *b=n; m, n đã thay đổi:</title>
+        <para id="id7954057">Đổi chỗ ta được :</para>
+        <para id="id7954067">*a=m=30; *b=n=20;</para>
+        <para id="id7954072"/>
+      </section>
+    </section>
+    <section id="id-889999260802">
+      <title>BÀI TẬP</title>
+      <section id="id-385888160896">
+        <title>Mục tiêu</title>
+        <para id="id7456538">Tiếp cận với một kiểu dữ liệu rất mạnh trong C là kiểu con trỏ. Từ đó, sinh viên có thể xây dựng các ứng dụng bằng cách sử dụng cấp phát động thông qua biến con trỏ.</para>
+      </section>
+      <section id="id-737967233522">
+        <title>Nội dung</title>
+        <para id="id7417850">Thực hiện các bài tập ở chương trước (chương VI : Kiểu mảng) bằng cách sử dụng con trỏ.</para>
+      </section>
+    </section>
+  </content>
+</document>
